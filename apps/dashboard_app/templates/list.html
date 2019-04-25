@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+
+<body class="p-3 mb-2 bg-dark text-white">
+    <table class="table table-borderless table-dark">
+        <thead>
+            <tr>
+                <th scope="col" class="text-right">
+                    <h3>Welcome, {{request.session.name | safe}}!</h3>
+                </th>
+                <th scope="col" class="text-right">
+                    <a href="/quote_list"><button type="button" class="btn btn-secondary btn-sm">Back</button></a>
+                    <a href="/clear"><button type="button" class="btn btn-secondary btn-sm">Logout</button></a>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Quotes</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+
+                    {% for quote in quotes %}
+                        <div class="border border-light m-2 p-2">
+                            <em>{{quote.author}}</em> &nbsp; - {{quote.quotes}} <br><br>
+                                Posted by &nbsp;
+                            <a href=""> &nbsp; {{quote.quoted_by.first_name}}</a><br>
+                            {{quote.liked_by.count}} &nbsp; people likes this 
+
+                        </div>
+                    {% endfor %}
+                </td>
+
+                <td>
+
+                </td>
+
+        </tbody>
+    </table>
+
+
+</body>
+
+</html>

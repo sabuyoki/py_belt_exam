@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+
+<body class="p-3 mb-2 bg-dark text-white">
+    <div class="table-responsive-sm">
+        <table class="table table-borderless table-dark">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-right">
+                        <h3>Welcome, {{request.session.name | safe}}!</h3>
+                    </th>
+                    <th scope="col" class="text-right">
+                        <a href="/quote_list"><button type="button" class="btn btn-secondary btn-sm">Back</button></a>
+                        <a href="/clear"><button type="button" class="btn btn-secondary btn-sm">Logout</button></a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th colspan=2>
+                        {% if messages %}
+                        {% for message in messages%}
+                        ERROR: {% if message.tags %} {{ message }} {% endif %} <br>
+                        {% endfor %} <br><br>
+                        {% endif %}
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan=2>
+                        <form action="update_user" method="POST">
+                            {% csrf_token %}
+                            {% for user in user %}
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputFirsdtNmae">First Name</label>
+                                    <input type="fname" class="form-control" id="fname" name="fname"
+                                        value={{user.first_name}}>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputLastName">Last Name</label>
+                                    <input type="lname" class="form-control" id="lname" name="lname"
+                                        value={{user.last_name}}>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    value={{user.email_address}}>
+                            </div>
+                            <input type="hidden" id="uid" name="uid" value={{request.session.rid}} >
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            {% endfor %}
+                        </form>
+                    </th>
+                    <td>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+</body>
+
+</html>
